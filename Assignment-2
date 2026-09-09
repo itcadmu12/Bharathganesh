@@ -1,32 +1,43 @@
-AWS EC2, S3 and IAM Assignment
-1. Launch and Configure an EC2 Instance
+Azure App Service, Azure AD and AWS IAM vs Azure AD RBAC
+1. Deploy a Sample Application to an Azure App Service Deployment Slot
 Steps
-First, I logged in to the AWS Management Console and opened the EC2 service.
-I clicked on Launch Instance to create a new EC2 instance.
-I gave the instance a simple name, Assignment-EC2.
-I selected Amazon Linux as the operating system.
-For the instance type, I selected t3.micro, as it is suitable for a basic assignment.
-I created a key pair so that I could securely access the instance if required.
-I created a security group and allowed SSH access through port 22.
-Instead of allowing SSH access from everyone, I selected My IP to restrict access to my own IP address.
-I configured an 8 GB gp3 storage volume and enabled encryption.
-After checking the configuration, I launched the EC2 instance.
-I waited until the instance status changed to Running.
-Finally, I verified that the instance was working correctly and took a screenshot for the assignment.
-2. Create an S3 Bucket with a Lifecycle Policy
+First, I logged in to the Microsoft Azure Portal.
+I searched for and opened App Services.
+I selected Create and started creating a new App Service.
+I selected the required subscription and resource group.
+I provided a suitable name for the web application.
+I selected a supported runtime stack, such as .NET, Node.js, or Python, depending on the sample application.
+I selected an appropriate region.
+I selected a suitable App Service plan.
+After reviewing the settings, I created the App Service.
+Once the App Service was successfully created, I opened it from the App Services list.
+I went to the Deployment slots section.
+I selected Add Slot to create a separate deployment environment.
+I named the slot staging.
+I created the staging slot using the production environment as the base.
+I opened the staging slot and deployed the sample application to it.
+After deployment, I opened the slot URL to check whether the application was running correctly.
+I verified that the sample application was accessible through the staging slot without affecting the production application.
+Finally, I took screenshots of the App Service, deployment slot, and running application.
+2. Register the Application in Azure AD
 Steps
-I opened the S3 service from the AWS Management Console.
-I clicked Create Bucket and provided a unique name for the bucket.
-I selected the AWS Region required for the assignment.
-I kept Block all public access enabled because the bucket does not need to be publicly accessible.
-I enabled Bucket Versioning so that previous versions of objects can be retained.
-I enabled Server-Side Encryption using SSE-S3 to protect the stored data.
-I created the S3 bucket and opened it.
-I then went to the Management section and selected Create Lifecycle Rule.
-I named the lifecycle rule ArchiveOldFiles.
-I configured the rule to apply to all objects in the bucket.
-I set the first transition to move objects to Standard-IA after 30 days.
-I set another transition to move objects to Glacier after 90 days.
-I configured the objects to be automatically deleted after 365 days.
-I saved and enabled the lifecycle rule.
-Finally, I checked that the lifecycle rule was active and took screenshots of the bucket and lifecycle configuration.
+I opened the Microsoft Entra ID service in the Azure Portal.
+(Azure AD is now called Microsoft Entra ID.)
+From the left-side menu, I selected App registrations.
+I clicked New registration.
+I entered a suitable name for the application, such as Sample-App-Registration.
+I selected the appropriate account type for the application.
+I entered the redirect URI if it was required by the sample application.
+I clicked Register.
+After registration, Azure created an Application (client) ID and a Directory (tenant) ID.
+I noted these IDs because they are used to identify the application when integrating it with Microsoft Entra ID.
+I configured the required authentication settings for the application.
+I verified that the application registration was successfully created.
+Finally, I took a screenshot of the application registration page for the assignment.
+3. AWS IAM vs Azure AD RBAC Comparison
+Steps
+I reviewed the basic purpose of AWS IAM and Azure RBAC.
+I compared how permissions are created and assigned in both cloud platforms.
+I looked at the main differences between AWS IAM policies and Azure role-based access control.
+I compared how users, groups, roles, and resources are managed.
+I summarized the differences in a short comparison note.
