@@ -1,0 +1,129 @@
+# React REST API Component — Product Catalog
+
+## Objective
+
+Build a small React component that consumes a REST API and displays loading, error, and successful data states.
+
+## REST Endpoint
+
+`https://fakestoreapi.com/products`
+
+## Component: App.jsx
+
+```jsx
+import { useEffect, useState } from 'react';
+
+function App() {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let ignore = false;
+
+    setIsLoading(true);
+    setError(null);
+
+    fetch('https://fakestoreapi.com/products')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (!ignore) {
+          setProducts(data);
+        }
+      })
+      .catch((err) => {
+        if (!ignore) {
+          setError(err);
+        }
+      })
+      .finally(() => {
+        if (!ignore) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading products...</p>;
+  }
+
+  if (error) {
+    return <p>Something went wrong: {error.message}</p>;
+  }
+
+  return (
+    <div>
+      <h1>Product Catalog</h1>
+
+      {products.map((product) => (
+        <div key={product.id}>
+          <h2>{product.title}</h2>
+          <p>Price: ${product.price}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+```
+
+## AI Coding Assistant Prompt Transcript
+
+### Prompt
+
+```text
+Create a React function component in src/App.jsx that consumes the REST endpoint https://fakestoreapi.com/products using the browser's built-in fetch API.
+
+Requirements:
+1. Use useState to store products, loading state, and error state.
+2. Use useEffect with an empty dependency array to fetch the products when the component loads.
+3. Show "Loading products..." while the request is in progress.
+4. If the request fails, show "Something went wrong: {error.message}".
+5. Check response.ok and throw an error when the HTTP response is unsuccessful.
+6. Display the product title and price when the request succeeds.
+7. Use product.id as the React key when rendering the products.
+8. Use an ignore flag and cleanup function to prevent state updates after the component unmounts.
+9. Do not add any external npm dependencies.
+10. Keep the component simple and use plain JSX without CSS.
+```
+
+### AI-Generated Code Review
+
+I reviewed the AI-generated code before accepting it.
+
+The code correctly:
+
+* Uses `useState` for products, loading, and error states.
+* Uses `useEffect` to make the REST API request when the component loads.
+* Displays a loading message while the API request is running.
+* Checks `response.ok` and throws an error for unsuccessful HTTP responses.
+* Uses `.catch()` to handle API/network errors.
+* Uses `.finally()` to stop the loading state.
+* Displays the error message when the request fails.
+* Uses `product.id` as the React key.
+* Uses an `ignore` flag and cleanup function to avoid updating state after unmounting.
+* Does not introduce any unnecessary dependencies or styling.
+
+## Expected Result
+
+When the application loads, it initially displays:
+
+`Loading products...`
+
+After the REST request succeeds, the product catalog is displayed with product titles and prices.
+
+If the API request fails, the application displays an error message such as:
+
+`Something went wrong: Failed to fetch products`
+
+This demonstrates a React component consuming a REST endpoint with appropriate loading and error states.
